@@ -1,0 +1,31 @@
+services:
+  reservations:
+    build:
+      context: .
+      dockerfile: ./apps/reservations/DockerFile
+      target: development
+    restart: unless-stopped
+    command: pnpm run start:dev reservations
+    env_file:
+      - ./apps/reservations/.env
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app:cached
+      - /usr/src/app/node_module
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/DockerFile
+      target: development
+    restart: unless-stopped
+    command: pnpm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/app:cached
+        - /usr/src/app/node_module
+  mongo:
+    image: mongo
