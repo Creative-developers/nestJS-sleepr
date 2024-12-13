@@ -27,5 +27,19 @@ services:
     volumes:
       - .:/usr/src/app:cached
         - /usr/src/app/node_module
+  payments:
+    build:
+      context: .
+      dockerfile: ./apps/payments/DockerFile
+      target: development
+    restart: unless-stopped
+    command: pnpm run start:dev payments
+    env_file:
+      - ./apps/payments/.env
+    ports:
+      - '3003:3003'
+    volumes:
+      - .:/usr/src/app:cached
+        - /usr/src/app/node_module
   mongo:
     image: mongo
