@@ -4,7 +4,7 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationsRepository } from './reservations.repository';
 import { ClientProxy } from '@nestjs/microservices';
 import { PAYMENTS_SERVICE, UserDto } from '@app/common';
-import { map } from 'rxjs';
+import { map, catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class ReservationsService {

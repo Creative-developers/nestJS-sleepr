@@ -53,3 +53,7 @@ services:
         - /usr/src/app/node_module
   mongo:
     image: mongo
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - 5672:5672
