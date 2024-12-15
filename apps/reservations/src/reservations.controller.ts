@@ -24,7 +24,7 @@ export class ReservationsController {
     @Body() createReservationDto: CreateReservationDto,
     @currentUser() user: UserDto,
   ) {
-    return this.reservationsService.create(createReservationDto, user._id);
+    return this.reservationsService.create(createReservationDto, user);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -49,5 +49,10 @@ export class ReservationsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.reservationsService.remove(id);
+  }
+
+  @Delete()
+  removeAll() {
+    return this.reservationsService.removeAll();
   }
 }

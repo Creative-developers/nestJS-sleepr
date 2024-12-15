@@ -1,6 +1,6 @@
 import { Logger, NotFoundException } from '@nestjs/common';
 import { AbstractDocument } from './abstract.schema';
-import { FilterQuery, Model, Types, UpdateQuery } from 'mongoose';
+import { FilterQuery, Model, Types, UpdateQuery, DeleteResult } from 'mongoose';
 
 export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   protected abstract readonly logger: Logger;
@@ -55,5 +55,12 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     filterQuery: FilterQuery<TDocument>,
   ): Promise<TDocument> {
     return this.model.findOneAndDelete(filterQuery).lean<TDocument>(true);
+  }
+
+  async deleteMany(filterQuery: FilterQuery<TDocument>): Promise<number> {
+    const result: DeleteResult = await this.model
+      .deleteMany(filterQuery)
+      .exec();
+    return result.deletedCount || 0;
   }
 }
