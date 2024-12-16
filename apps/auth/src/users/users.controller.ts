@@ -14,9 +14,15 @@ export class UsersController {
     return this.userService.create(creatUserDto);
   }
 
+  // @Get()
+  // @UseGuards(JwtAuthGuard)
+  // async getUser(@currentUser() user: UserDocument) {
+  //   return user;
+  // }
+
   @Get()
   @UseGuards(JwtAuthGuard)
-  async getUser(@currentUser() user: UserDocument) {
-    return user;
+  async getUsers() {
+    return this.userService.getUsers();
   }
 }

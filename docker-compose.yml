@@ -10,6 +10,7 @@ services:
       - ./apps/reservations/.env
     ports:
       - '3000:3000'
+      - '9229:9229' #for debugging
     volumes:
       - .:/usr/src/app:cached
       - /usr/src/app/node_module
