@@ -6,6 +6,9 @@ import { LoggerModule, NOTIFICATIONS_SERVICE } from '@app/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 import * as Joi from 'joi';
+import { ApolloDriverConfig, ApolloFederationDriver } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { PaymentsResolver } from './payments.resolver';
 
 @Module({
   imports: [
@@ -13,11 +16,18 @@ import * as Joi from 'joi';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        PORT: Joi.number().required(),
+        HTTP_PORT: Joi.number().required(),
+        TCP_PORT: Joi.number().required(),
         STRIPE_SECRET_KEY: Joi.string().required(),
         NOTIFICATIONS_HOST: Joi.required(),
         NOTIFICATIONS_PORT: Joi.number().required(),
       }),
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloFederationDriver,
+      autoSchemaFile: {
+        federation: 2,
+      },
     }),
     ClientsModule.registerAsync([
       {
@@ -35,6 +45,6 @@ import * as Joi from 'joi';
   ],
 
   controllers: [PaymentsController],
-  providers: [PaymentsService],
+  providers: [PaymentsService, PaymentsResolver],
 })
 export class PaymentsModule {}

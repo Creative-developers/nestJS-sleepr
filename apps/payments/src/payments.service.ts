@@ -45,4 +45,10 @@ export class PaymentsService {
 
     return paymentIntent;
   }
+
+  async getPayments() {
+    // get payments from your  Stripe API
+    const payments = await this.stripe.paymentIntents.list({ limit: 10 });
+    return payments.data;
+  }
 }
