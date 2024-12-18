@@ -58,3 +58,6 @@ steps:
     args:
       - 'push'
       - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/payments/production'
+
+serviceAccount: 'projects/my-project3333-1533742417163/serviceAccounts/241672286143-compute@developer.gserviceaccount.com'
+logsBucket: 'gs://sleepr-storage-bucket'
