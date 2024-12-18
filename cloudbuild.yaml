@@ -6,7 +6,7 @@ steps:
       - '-t'
       - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/reservations/production'
       - '-f'
-      - 'apps/reservations/Dockerfile'
+      - 'apps/reservations/DockerFile'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
@@ -21,7 +21,7 @@ steps:
       - '-t'
       - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/auth/production'
       - '-f'
-      - 'apps/auth/Dockerfile'
+      - 'apps/auth/DockerFile'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
@@ -36,7 +36,7 @@ steps:
       - '-t'
       - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/notifications/production'
       - '-f'
-      - 'apps/notifications/Dockerfile'
+      - 'apps/notifications/DockerFile'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
@@ -51,7 +51,7 @@ steps:
       - '-t'
       - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/payments/production'
       - '-f'
-      - 'apps/payments/Dockerfile'
+      - 'apps/payments/DockerFile'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
@@ -61,3 +61,4 @@ steps:
 
 serviceAccount: 'projects/my-project3333-1533742417163/serviceAccounts/241672286143-compute@developer.gserviceaccount.com'
 logsBucket: 'gs://sleepr-storage-bucket'
+
