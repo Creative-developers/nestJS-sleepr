@@ -38,3 +38,10 @@ spec:
           ports:
             - containerPort: 3002
             - containerPort: 3003
+          resources:
+            requests:
+              cpu: '500m'
+              memory: '256Mi'
+            limits:
+              cpu: '1'
+              memory: '512Mi'
