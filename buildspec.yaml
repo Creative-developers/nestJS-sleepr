@@ -6,25 +6,26 @@ phases:
       - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 897722664730.dkr.ecr.eu-north-1.amazonaws.com
   build:
     commands: 
-       docker build -t reservations -f ./apps/reservations/DockerFile .
-       docker tag reservations:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/reservations:latest
+       - docker build -t reservations -f ./apps/reservations/DockerFile .
+       - docker tag reservations:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/reservations:latest
 
-       docker build -t auth -f ./apps/auth/DockerFile .
-       docker tag auth:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
+       - docker build -t auth -f ./apps/auth/DockerFile .
+       - docker tag auth:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
 
-       docker build -t notifications -f ./apps/notifications/DockerFile .
-       docker tag notifications:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
+       - docker build -t notifications -f ./apps/notifications/DockerFile .
+       - ddocker tag notifications:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
 
-
-       docker build -t payments -f ./apps/payments/DockerFile .
-       docker tag payments:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
+       - docker build -t payments -f ./apps/payments/DockerFile .
+       - docker tag payments:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
 
   post_build:
     commands: 
-       docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/reservations:latest
-       docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
-       docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
-       docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/reservations:latest
+      - docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
+      - docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
+      - docker push 897722664730.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
 
 
 
