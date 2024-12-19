@@ -16,21 +16,22 @@ export class ReservationsService {
     createReservationDto: CreateReservationDto,
     { email, _id: userId }: UserDto,
   ) {
-    return this.paymentsService
-      .send('create_charge', {
-        ...createReservationDto.charge,
-        email,
-      })
-      .pipe(
-        map((response) => {
-          return this.reservationRepository.create({
-            ...createReservationDto,
-            invoiceId: response.id,
-            timestamp: new Date(),
-            userId,
-          });
-        }),
-      );
+    console.log({ email });
+    // return this.paymentsService
+    //   .send('create_charge', {
+    //     ...createReservationDto.charge,
+    //     email,
+    //   })
+    //   .pipe(
+    //     map((response) => {
+    //       return this.reservationRepository.create({
+    //         ...createReservationDto,
+    //         invoiceId: response.id,
+    //         timestamp: new Date(),
+    //         userId,
+    //       });
+    //     }),
+    //   );
   }
 
   async findAll() {

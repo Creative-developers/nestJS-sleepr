@@ -6,6 +6,7 @@ import {
   PAYMENTS_SERVICE,
   DatabaseModule,
   LoggerModule,
+  HealthModule,
 } from '@app/common';
 import { ReservationsRepository } from './reservations.repository';
 import {
@@ -61,6 +62,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         inject: [ConfigService],
       },
     ]),
+    HealthModule,
     // ClientsModule.register([
     //   {
     //     name: AUTH_SERVICE,
