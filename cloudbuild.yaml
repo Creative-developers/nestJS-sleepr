@@ -15,49 +15,49 @@ steps:
       - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/reservations/production'
 
   # auth
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args:
-  #     - 'build'
-  #     - '-t'
-  #     - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/auth/production'
-  #     - '-f'
-  #     - 'apps/auth/DockerFile'
-  #     - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/auth/production'
+      - '-f'
+      - 'apps/auth/DockerFile'
+      - '.'
 
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args:
-  #     - 'push'
-  #     - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/auth/production'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/auth/production'
 
-  # # notifications
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args:
-  #     - 'build'
-  #     - '-t'
-  #     - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/notifications/production'
-  #     - '-f'
-  #     - 'apps/notifications/DockerFile'
-  #     - '.'
+  # notifications
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/notifications/production'
+      - '-f'
+      - 'apps/notifications/DockerFile'
+      - '.'
 
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args:
-  #     - 'push'
-  #     - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/notifications/production'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/notifications/production'
 
-  # # payments
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args:
-  #     - 'build'
-  #     - '-t'
-  #     - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/payments/production'
-  #     - '-f'
-  #     - 'apps/payments/DockerFile'
-  #     - '.'
+  # payments
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/payments/production'
+      - '-f'
+      - 'apps/payments/DockerFile'
+      - '.'
 
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args:
-  #     - 'push'
-  #     - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/payments/production'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-east4-docker.pkg.dev/my-project3333-1533742417163/payments/production'
 
 serviceAccount: 'projects/my-project3333-1533742417163/serviceAccounts/241672286143-compute@developer.gserviceaccount.com'
 logsBucket: 'gs://sleepr-storage-bucket'
