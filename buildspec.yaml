@@ -13,7 +13,7 @@ phases:
        - docker tag auth:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/auth:latest
 
        - docker build -t notifications -f ./apps/notifications/DockerFile .
-       - ddocker tag notifications:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
+       - docker tag notifications:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/notifications:latest
 
        - docker build -t payments -f ./apps/payments/DockerFile .
        - docker tag payments:latest 897722664730.dkr.ecr.eu-north-1.amazonaws.com/payments:latest
