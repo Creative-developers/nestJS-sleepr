@@ -16,8 +16,8 @@ export class AuthController {
     @currentUser() user: UserDocument,
     @Res({ passthrough: true }) resposne: Response,
   ) {
-    await this.authService.login(user, resposne);
-    resposne.send(user);
+    const token = await this.authService.login(user, resposne);
+    resposne.send(token);
   }
 
   @UseGuards(JwtAuthGuard)
