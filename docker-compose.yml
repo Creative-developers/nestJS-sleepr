@@ -52,5 +52,9 @@ services:
     volumes:
       - .:/usr/src/app:cached
         - /usr/src/app/node_module
-  mongo:
-    image: mongo
+  mysql:
+    image: mysql
+    env_file:
+      - .env
+    ports:
+      - 3306:3306

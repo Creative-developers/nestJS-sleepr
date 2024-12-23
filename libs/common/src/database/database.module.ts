@@ -1,15 +1,21 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
 
 @Module({
   // imports: [MongooseModule.forRoot('mongodb://localhost/sleepr')],
   imports: [
-    MongooseModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => {
         return {
-          uri: configService.get('MONGODB_URI'), //need to check this... it is  not running as expected
-          //uri: 'mongodb://localhost/sleepr',
+          type: 'mysql',
+          host: configService.getOrThrow('MYSQL_HOST'),
+          port: configService.getOrThrow('MYSQL_PORT'),
+          username: configService.getOrThrow('MYSQL_USERNAME'),
+          database: configService.getOrThrow('MYSQL_DATABASE'),
+          synchronize: configService.getOrThrow('MYSQL_SYNCHRONIZE'),
+          autoLoadEntities: true,
         };
       },
       inject: [ConfigService],
@@ -17,7 +23,7 @@ import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
   ],
 })
 export class DatabaseModule {
-  static forFeature(models: ModelDefinition[]) {
-    return MongooseModule.forFeature(models);
+  static forFeature(models: EntityClassOrSchema[]): DynamicModule {
+    return TypeOrmModule.forFeature(models);
   }
 }
