@@ -1,20 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
-import { ReservationsRepository } from './reservations.repository';
 import { ClientProxy } from '@nestjs/microservices';
-import { PAYMENTS_SERVICE, UserDto } from '@app/common';
+import { PAYMENTS_SERVICE, User } from '@app/common';
 import { map } from 'rxjs';
+import { PrismaService } from './prisma.servie';
 
 @Injectable()
 export class ReservationsService {
   constructor(
-    private readonly reservationRepository: ReservationsRepository,
+    private readonly prismaService: PrismaService,
     @Inject(PAYMENTS_SERVICE) private readonly paymentsService: ClientProxy,
   ) {}
   create(
     createReservationDto: CreateReservationDto,
-    { email, _id: userId }: UserDto,
+    { email, id: userId }: User,
   ) {
     return this.paymentsService
       .send('create_charge', {
@@ -23,37 +23,40 @@ export class ReservationsService {
       })
       .pipe(
         map((response) => {
-          return this.reservationRepository.create({
-            ...createReservationDto,
-            invoiceId: response.id,
-            timestamp: new Date(),
-            userId,
+          return this.prismaService.reservation.create({
+            data: {
+              startDate: createReservationDto.startDate,
+              endDate: createReservationDto.endDate,
+              invoiceId: response.id,
+              timestamp: new Date(),
+              userId,
+            },
           });
         }),
       );
   }
 
   async findAll() {
-    return this.reservationRepository.find({});
+    return this.prismaService.reservation.findMany({});
   }
 
-  async findOne(_id: string) {
-    return this.reservationRepository.findOne({ _id });
+  async findOne(id: number) {
+    return this.prismaService.reservation.findUniqueOrThrow({ where: { id } });
   }
 
-  async update(_id: string, updateReservationDto: UpdateReservationDto) {
+  async update(id: number, updateReservationDto: UpdateReservationDto) {
     // return `This action updates a #${id} reservation`;
-    return this.reservationRepository.findOneAndUpdate(
-      { _id },
-      { $set: updateReservationDto },
-    );
+    return this.prismaService.reservation.update({
+      where: { id },
+      data: updateReservationDto,
+    });
   }
 
-  async remove(_id: string) {
-    return this.reservationRepository.findOneAndDelete({ _id });
+  async remove(id: number) {
+    return this.prismaService.reservation.delete({ where: { id } });
   }
 
   async removeAll() {
-    return this.reservationRepository.deleteMany({});
+    return this.prismaService.reservation.deleteMany({});
   }
 }

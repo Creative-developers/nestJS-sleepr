@@ -4,18 +4,13 @@ import { ReservationsController } from './reservations.controller';
 import {
   AUTH_SERVICE,
   PAYMENTS_SERVICE,
-  DatabaseModule,
   LoggerModule,
   HealthModule,
 } from '@app/common';
-import { ReservationsRepository } from './reservations.repository';
-import {
-  ReservationDocument,
-  ReservationSchema,
-} from './models/reservation.model';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { PrismaService } from './prisma.servie';
 
 // Resolve and log the expected path of the .env file
 // const envFilePath = resolve(process.cwd(), 'apps/reservations/.env');
@@ -26,17 +21,13 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        MONGODB_URI: Joi.string().required(),
+        DATABASE_URL: Joi.required(),
         AUTH_HOST: Joi.required(),
         PAYMENTS_HOST: Joi.required(),
         AUTH_PORT: Joi.number().required(),
         PAYMENT_PORT: Joi.number().required(),
       }),
     }),
-    DatabaseModule,
-    DatabaseModule.forFeature([
-      { name: ReservationDocument.name, schema: ReservationSchema },
-    ]),
     LoggerModule,
     ClientsModule.registerAsync([
       {
@@ -71,6 +62,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     // ]),
   ],
   controllers: [ReservationsController],
-  providers: [ReservationsService, ReservationsRepository],
+  providers: [ReservationsService, PrismaService],
 })
 export class ReservationsModule {}

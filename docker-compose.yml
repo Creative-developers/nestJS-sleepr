@@ -5,7 +5,9 @@ services:
       dockerfile: ./apps/reservations/DockerFile
       target: development
     restart: unless-stopped
-    command: pnpm run start:dev reservations
+    command: sh -c "pnpm prisma migrate dev --schema apps/reservations/prisma/schema.prisma && pnpm prisma generate --schema apps/reservations/prisma/schema.prisma && pnpm run start:dev reservations"
+    depends_on:
+      - postgres
     env_file:
       - ./apps/reservations/.env
     ports:
@@ -20,7 +22,9 @@ services:
       dockerfile: ./apps/auth/DockerFile
       target: development
     restart: unless-stopped
-    command: pnpm run start:dev auth
+    command: sh -c "pnpm prisma migrate dev --schema apps/auth/prisma/schema.prisma && pnpm prisma generate --schema apps/auth/prisma/schema.prisma && pnpm run start:dev auth"
+    depends_on:
+      - postgres
     env_file:
       - ./apps/auth/.env
     ports:
@@ -52,5 +56,9 @@ services:
     volumes:
       - .:/usr/src/app:cached
         - /usr/src/app/node_module
-  mongo:
-    image: mongo
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
